@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Estilo para todos los botones -->
+    <!-- Estilo para botones genérico -->
     <Style TargetType="Button">
         
         <Style.Triggers>
@@ -60,6 +60,8 @@
             </Trigger>
             
         </Style.Triggers>
+             <Setter Property="HorizontalAlignment" Value="Center"/>
+             <Setter Property="VerticalAlignment" Value="Top"/>
              <Setter Property="Width" Value="40"/>
              <Setter Property="Height" Value="40"/>
              <Setter Property="FontSize" Value="25"/>
@@ -74,7 +76,7 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="15">
+                                CornerRadius="25">
                            <ContentPresenter HorizontalAlignment="Center"
                                              VerticalAlignment="Center"
                                              RecognizesAccessKey="True"/>
@@ -87,28 +89,62 @@
 
     <!-- Estilo para los botones dentro de las celdas del juego -->
     <Style x:Key="CellButton" TargetType="Button">
+
+        <!-- Estado por defecto -->
+        <Setter Property="Content"         Value="{Binding DisplayText}"/>
+        <Setter Property="Background"      Value="White"/>
+        <Setter Property="Foreground"      Value="MediumPurple"/>
+        <Setter Property="FontSize"        Value="12"/>
+        <Setter Property="FontWeight"      Value="Bold"/>
+        <Setter Property="BorderBrush"     Value="LightSlateGray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor"          Value="Hand"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="CellBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="2">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CellBorder" Property="Background" Value="Lavender"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="CellBorder" Property="Background" Value="MediumPurple"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
 
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="FloralWhite"/>
-            </Trigger>
 
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="MediumPurple"/>
+            <!-- Celda revelada sin mina -->
+            <DataTrigger Binding="{Binding IsRevealed}" Value="True">
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Cursor"     Value="Arrow"/>
+            </DataTrigger>
+
+            <!-- Celda con bandera -->
+            <DataTrigger Binding="{Binding IsFlagged}" Value="True">
+                <Setter Property="Background" Value="SlateGray"/>
+            </DataTrigger>
+
+            <!-- Celda revelada que es mina -->
+            <DataTrigger Binding="{Binding ShowMine}" Value="True">
+                <Setter Property="Background" Value="PaleVioletRed"/>
                 <Setter Property="Foreground" Value="White"/>
-            </Trigger>
+            </DataTrigger>
 
         </Style.Triggers>
-
-        <Setter Property="Content" Value="{Binding DisplayText}"/>
-        <Setter Property="Width" Value="auto"/>
-        <Setter Property="Height" Value="auto"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="MediumPurple"/>
-        <Setter Property="BorderBrush" Value="LightSlateGray"/>
-
     </Style>
 
 </ResourceDictionary>

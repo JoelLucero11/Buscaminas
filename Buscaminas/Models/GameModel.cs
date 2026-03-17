@@ -37,7 +37,7 @@ namespace Buscaminas.Models
             AdjacentMinesAssignment(); 
         }
 
-        private void MinesAssignment()
+        public void MinesAssignment()
         {
             Random random = new Random();
             int Mines = 0;
@@ -56,7 +56,7 @@ namespace Buscaminas.Models
 
         }
 
-        private void AdjacentMinesAssignment()
+        public void AdjacentMinesAssignment()
         {
             for(int i = 0; i < Rows; i++)
             {

@@ -9,116 +9,135 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Buscaminas.ViewModels
 {
     internal class GameVM : BaseViewModel
     {
-
-        private readonly CellModel _cell;
         private readonly GameModel _game;
-        private readonly bool _win;
+        private readonly Action<object> _navigate;
+        private readonly string _currentdifficulty;
         private bool _lost;
+        private bool _won;
 
-        public ObservableCollection<CellModel> Cells { get; }
-        public int Row { get; }
-        public int Column { get; }
-
-        public GameVM(string difficulty)
-        {
-            _game = new GameModel();
-            _game.StartGame(difficulty);
-            Column = _game.Columns;
-            Row = _game.Rows;
-            Cells = new ObservableCollection<CellModel>();
-            BuildCellViewModels();
-            StartTimer();
-            RightClickCommand = new RelayCommand(_ => IsFlagged = !IsFlagged);
-            LeftClickCommand = new RelayCommand(_ => IsRevealed = !IsRevealed);
-        }
-
-        public ICommand RightClickCommand { get; }
-
-        public ICommand LeftClickCommand { get; }
-
-        private void BuildCellViewModels()
-        {
-            Cells.Clear();
-
-            for (int i = 0; i < _game.Rows; i++)
-                for (int j = 0; j < _game.Columns; j++)
-                    Cells.Add(_cell);
-        }
-
-        public bool IsMine
-        {
-            get => _cell.IsMine;
-            set { if (_cell.IsMine == value) return; _cell.IsMine = value; OnPropertyChanged(); }
-        }
-
-        public bool IsRevealed
-        {
-            get => _cell.IsRevealed;
-            set
-            {
-                if (_cell.IsRevealed == value) return;
-                _cell.IsRevealed = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(DisplayText));
-            }
-        }
-
-        public bool IsFlagged
-        {
-            get => _cell.IsFlagged;
-            set
-            {
-                if (_cell.IsFlagged == value) return;
-                _cell.IsFlagged = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(DisplayText));
-            }
-        }
-
-        public int AdjacentMines
-        {
-            get => _cell.AdjacentMines;
-            set
-            {
-                if (_cell.AdjacentMines == value) return;
-                _cell.AdjacentMines = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(DisplayText));
-            }
-        }
-
-        public string DisplayText
-        {
-            get
-            {
-                if (!IsRevealed && IsFlagged) return "a";
-                if (!IsRevealed) return "b";
-                if (AdjacentMines > 0) return AdjacentMines.ToString();
-                return string.Empty;
-            }
-        }
-
-        /*private void RevealAllMines()
-        {
-            foreach (var cell in Cells)
-            {
-                if (cell.IsMine)
-                    cell.IsRevealed = true;
-            }
-        }*/
-
-        private DispatcherTimer _timer;
+        // ── Timer ───
+        private DispatcherTimer? _timer;
         private TimeSpan _elapsed;
 
         public string ElapsedTime => _elapsed.ToString(@"mm\:ss");
 
-        public void StartTimer()
+        public GameVM(string difficulty, Action<object> navigate)
+        {
+            _navigate = navigate;
+            _currentdifficulty = difficulty;
+            _game = new GameModel();
+            _game.StartGame(_currentdifficulty);
+            Cells = new ObservableCollection<CellVM>();
+            BuildCellViewModels();
+            StartTimer();
+
+            RevealCommand = new RelayCommand(obj => RevealCell(obj as CellVM));
+            FlagCommand = new RelayCommand(obj => ToggleFlag(obj as CellVM));
+            BackCommand = new RelayCommand(_ => { StopTimer(); _navigate(new MainMenuVM(_navigate)); });
+            SettingsCommand = new RelayCommand(_ => { StopTimer(); _navigate(new SettingsVM(_navigate)); });
+            RestartCommand = new RelayCommand(_ =>
+            {
+                StopTimer();
+                _game.StartGame(difficulty);
+                BuildCellViewModels();
+                _lost = false;
+                _won = false;
+                StatusMessage = string.Empty;
+                StartTimer();
+            });
+
+        }
+
+        public ObservableCollection<CellVM> Cells { get; }
+
+        public int Rows => _game.Rows;
+        public int Columns => _game.Columns;
+
+        public bool GameOver => _won || _lost;
+
+        private string _statusMessage = string.Empty;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            private set { _statusMessage = value; OnPropertyChanged(); }
+        }
+
+        // ── Comandos ───
+        public ICommand RevealCommand { get; }
+        public ICommand FlagCommand { get; }
+        public ICommand RestartCommand { get; }
+        public ICommand BackCommand { get; }
+        public ICommand SettingsCommand { get; }
+
+        // ── Métodos privados ───
+        private void BuildCellViewModels()
+        {
+            Cells.Clear();
+            for (int i = 0; i < _game.Rows; i++)
+                for (int j = 0; j < _game.Columns; j++)
+                    Cells.Add(new CellVM(_game.Cells[i, j], i, j));
+        }
+
+        private void RevealCell(CellVM? cellVM)
+        {
+            if (cellVM == null || GameOver) return;
+            if (cellVM.IsFlagged) return;
+            if (cellVM.IsRevealed) return;
+
+            if (cellVM.IsMine)
+            {
+                cellVM.IsRevealed = true;
+                _lost = true;
+                StatusMessage = "¡Boom! Pisaste una mina. 💣";
+                StopTimer();
+                RevealAllMines();
+                return;
+            }
+
+            _game.RevealCell(cellVM.Row, cellVM.Column);
+            SyncCellStates();
+
+            if (_game.CheckVictory())
+            {
+                _won = true;
+                StatusMessage = "¡Felicidades, ganaste! 🎉";
+                StopTimer();
+            }
+        }
+
+        private void ToggleFlag(CellVM? cellVM)
+        {
+            if (cellVM == null || GameOver) return;
+            if (cellVM.IsRevealed) return;
+            cellVM.IsFlagged = !cellVM.IsFlagged;
+        }
+
+        private void SyncCellStates()
+        {
+            foreach (var cellVM in Cells)
+            {
+                if (_game.Cells[cellVM.Row, cellVM.Column].IsRevealed)
+                    cellVM.ForceSync();
+            }
+        }
+
+        private void RevealAllMines()
+        {
+            foreach (var cellVM in Cells)
+                if (cellVM.IsMine)
+                    cellVM.IsRevealed = true;
+        }
+
+
+
+        private void StartTimer()
         {
             _elapsed = TimeSpan.Zero;
             _timer = new DispatcherTimer
@@ -132,13 +151,11 @@ namespace Buscaminas.ViewModels
             };
             _timer.Start();
         }
+        private void StopTimer() => _timer?.Stop();
 
-        public void StopTimer()
-        {
-            _timer?.Stop();
-        }
     }
-
 }
+
+
 
 

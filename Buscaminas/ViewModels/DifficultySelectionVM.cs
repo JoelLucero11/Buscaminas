@@ -29,9 +29,9 @@ namespace Buscaminas.ViewModels
 
         public DifficultySelectionVM(Action<object> navigate)
         {
-            EasyCommand = new RelayCommand(_ => navigate(new GameVM("easy")));
-            MediumCommand = new RelayCommand(_ => navigate(new GameVM("medium")));
-            HardCommand = new RelayCommand(_ => navigate(new GameVM("hard")));
+            EasyCommand = new RelayCommand(_ => navigate(new GameVM("easy", navigate)));
+            MediumCommand = new RelayCommand(_ => navigate(new GameVM("medium", navigate)));
+            HardCommand = new RelayCommand(_ => navigate(new GameVM("hard", navigate)));
 
             BackCommand = new RelayCommand(_ => navigate(new MainMenuVM(navigate)));
         }

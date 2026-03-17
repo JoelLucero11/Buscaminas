@@ -16,10 +16,11 @@
 
         <StackPanel HorizontalAlignment="Left" Grid.Column="0">
             <TextBlock Text="Buscaminas" HorizontalAlignment="Center"/>
-            <Button Content="Nuevo Juego" Width="150" Height="40"
-                    Command="{Binding StartNewGame}"/>
-            <Button Content="Cargar Juego" Width="150" Height="40"/>
+            <Button Content="Reiniciar" Width="150" Height="40"
+                    Command="{Binding RestartCommand}"/>
             <Button Content="Configuración" Width="150" Height="40"/>
+            <Button Content="Abandonar" Width="150" Height="40"
+                    Command="{Binding BackCommand}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" >
@@ -28,21 +29,20 @@
             
             <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                         <UniformGrid Columns="{Binding Column}"/>
+                         <UniformGrid Columns="15"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource CellButton}">
-
+                        <Button Style="{StaticResource CellButton}"
+                                Command="{Binding DataContext.RevealCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}">
                             <Button.InputBindings>
-                                <MouseBinding Gesture="RightClick"
-                                              Command="{Binding RightClickCommand}"/>
-                                <MouseBinding Gesture="LeftClick"
-                                              Command="{Binding IsRevealed}"/>
+                                <MouseBinding MouseAction="RightClick"
+                                              Command="{Binding DataContext.FlagCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                              CommandParameter="{Binding}" />
                             </Button.InputBindings>
-
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

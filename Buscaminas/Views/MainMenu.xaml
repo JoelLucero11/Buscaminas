@@ -24,11 +24,11 @@
                        Margin="0,0,0,4">
             </TextBlock>
 
-            <TextBlock Text="— Find the mines. Don't blow up. —"
+            <TextBlock Text="— ¡Cuidado! Es terreno minado —"
                        FontSize="12"
                        FontStyle="Italic"
                        HorizontalAlignment="Center"
-                       Margin="0,0,0,48"/>
+                       Margin="0,0,0,35"/>
 
             <Button Content="▶  Jugar"
                     Command="{Binding GameCommand}"
@@ -49,12 +49,5 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Margin="0,0,20,20"/>
-
-        <TextBlock Grid.Row="2"
-                   Text="v1.0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   FontSize="11"
-                   Margin="20,0,0,22"/>
     </Grid>
 </UserControl>
