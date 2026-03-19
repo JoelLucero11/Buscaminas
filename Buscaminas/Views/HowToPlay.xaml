@@ -38,7 +38,7 @@
                            TextWrapping="Wrap"
                            FontWeight="Normal"/>
                 
-                <Image Source="/Assets/Tutorial1.png" 
+                <Image Source="/Assets/SafeCellTutorial.png" 
                        Height="150" 
                        VerticalAlignment="Bottom"
                        Stretch="Uniform"/>
@@ -50,7 +50,7 @@
                            TextWrapping="Wrap"
                            FontWeight="Normal"/>
                 
-                <Image Source="/Assets/Tutorial2.png" 
+                <Image Source="/Assets/MineAdjacentTutorial.png" 
                        Height="150"
                        VerticalAlignment="Bottom"
                        Stretch="Uniform"/>
@@ -62,7 +62,7 @@
                            TextWrapping="Wrap"
                            FontWeight="Normal"/>
                 
-                <Image Source="/Assets/Tutorial3.png" 
+                <Image Source="/Assets/ToggleFlagTutorial.png" 
                        Height="150" 
                        VerticalAlignment="Bottom"
                        Stretch="Uniform"/>
@@ -74,7 +74,7 @@
                            TextWrapping="Wrap"
                            FontWeight="Normal"/>
                 
-                <Image Source="/Assets/Tutorial4.png" 
+                <Image Source="/Assets/LostTutorial.png" 
                        Height="150" 
                        VerticalAlignment="Bottom"
                        Stretch="Uniform"/>

@@ -9,8 +9,7 @@
         Height="550" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        ShowInTaskbar="False"
-        Icon="/Assets/Tutorial1.png">
+        ShowInTaskbar="False">
 
     <Window.DataContext>
         <vm:NavigationVM/>
