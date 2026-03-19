@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Height="550" Width="800"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        ShowInTaskbar="False"
+        Icon="/Assets/Tutorial1.png">
 
     <Window.DataContext>
         <vm:NavigationVM/>
