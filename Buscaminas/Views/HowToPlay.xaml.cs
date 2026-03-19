@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Buscaminas.Views
 {
     /// <summary>
-    /// Lógica de interacción para Settings.xaml
+    /// Lógica de interacción para HowToPlay.xaml
     /// </summary>
-    public partial class Settings : UserControl
+    public partial class HowToPlay : UserControl
     {
-        public Settings()
+        public HowToPlay()
         {
             InitializeComponent();
         }

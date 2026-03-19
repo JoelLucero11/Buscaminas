@@ -18,12 +18,18 @@ namespace Buscaminas.Models
             {
                 case "easy":
                     NumMines = 15;
+                    Rows = 9;
+                    Columns = 9;
                     break;
                 case "medium":
-                    NumMines = 50;
+                    NumMines = 40;
+                    Rows = 16;
+                    Columns = 16;
                     break;
                 case "hard":
-                    NumMines = 99;
+                    NumMines = 70;
+                    Rows = 16;
+                    Columns = 16;
                     break;
             }
 
@@ -34,15 +40,16 @@ namespace Buscaminas.Models
             SetDifficulty(difficulty);
             InitializeCells();       
             MinesAssignment();       
-            AdjacentMinesAssignment(); 
+            AdjacentMinesAssignment();
+            SafeCell();
         }
 
         public void MinesAssignment()
         {
             Random random = new Random();
-            int Mines = 0;
+            int mines = 0;
 
-            while (Mines < NumMines)
+            while (mines < NumMines)
             {
                  int row = random.Next(0, Rows);
                  int column = random.Next(0, Columns);
@@ -50,7 +57,7 @@ namespace Buscaminas.Models
                 if (Cells[row, column].IsMine != true)
                 {
                     Cells[row, column].IsMine = true;
-                    Mines++;
+                    mines++;
                 }
             }
 
@@ -83,15 +90,33 @@ namespace Buscaminas.Models
                 Cells[row, column].AdjacentMines++;
         }
 
-        public bool SafeCell()
-        {         
-               for(int i = 0; i < Rows; i++)              
-                    for(int j = 0; j < Columns; j++)
-                    
-                        if (!Cells[i, j].IsMine && Cells[i, j].AdjacentMines == 0)                                                 
-                            return true;                                                     
-           
-            return false;
+        private void SafeCell()
+        {
+            foreach (var cell in Cells)
+            {
+                if (!cell.IsMine && cell.AdjacentMines.Equals(0))
+                {
+                    cell.IsSafe = true;
+                    return;
+                }
+            }
+            foreach (var cell in Cells)
+            {
+                if (!cell.IsMine)
+                {
+                    cell.IsSafe = true;
+                    return;
+                }
+            }
+        }
+
+        private void HelperReveal(int row, int column)
+        {
+            if (row < 0 || row >= Rows || column < 0 || column >= Columns)
+                return;
+            if (Cells[row, column].IsRevealed || Cells[row, column].IsFlagged)
+                return;
+            Cells[row, column].IsRevealed = true;
         }
 
         public void RevealCell(int row, int column)

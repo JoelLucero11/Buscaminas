@@ -12,14 +12,14 @@ namespace Buscaminas.ViewModels
     internal class MainMenuVM : BaseViewModel
     {
         public ICommand GameCommand { get; }
-        public ICommand SettingsCommand { get; }
         public ICommand ExitCommand { get; }
+        public ICommand HowToPlayCommand { get; }
 
         public MainMenuVM(Action<object> navigate)
         {
             GameCommand = new RelayCommand(_ => navigate(new DifficultySelectionVM(navigate)));
-            SettingsCommand = new RelayCommand(_ => navigate(new SettingsVM(navigate)));
             ExitCommand = new RelayCommand(_ => Application.Current.Shutdown());
+            HowToPlayCommand = new RelayCommand(_ => navigate(new HowToPlayVM(navigate)));
         }
 
     }
