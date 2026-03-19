@@ -72,20 +72,30 @@ namespace Buscaminas.ViewModels
             }
         }
 
+        public bool IsSafeCell
+        {
+            get => _cell.IsSafe;
+            set
+            {
+                _cell.IsSafe = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Propiedad calculada para mostrar el texto correcto según el estado de la celda
         public string DisplayText
         {
             get
             {
-                if (IsFlagged == true && IsRevealed == false) return "F";
-                else if (IsRevealed == true && IsMine == true) return "*";
+                if (IsFlagged == true && IsRevealed == false) return "🚩";   
+                else if (IsRevealed == true && IsMine == true) return "💣";
                 else if (IsRevealed == true && IsMine == false) return AdjacentMines > 0 ? AdjacentMines.ToString() : string.Empty;   
                 else return string.Empty;
             }
         }
         public bool ShowMine => IsRevealed && IsMine;
 
-        public void ForceSync()
+        public void SyncCells()
         {
             OnPropertyChanged(nameof(IsRevealed));
             OnPropertyChanged(nameof(DisplayText));

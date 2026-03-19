@@ -20,6 +20,7 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
                 <Label Content="BUSCAMINAS"
+                       FontStyle="Italic"
                        FontSize="72"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,8"/>

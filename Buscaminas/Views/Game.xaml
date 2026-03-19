@@ -10,27 +10,51 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel HorizontalAlignment="Left" Grid.Column="0">
-            <TextBlock Text="Buscaminas" HorizontalAlignment="Center"/>
-            <Button Content="Reiniciar" Width="150" Height="40"
+        <StackPanel HorizontalAlignment="Center" Grid.Column="0">
+            
+            <TextBlock Text="Buscaminas" 
+                       HorizontalAlignment="Center"/>
+            
+            <Button Content="Reiniciar"
+                    Width="150" 
+                    Height="40"
                     Command="{Binding RestartCommand}"/>
+            
             <Button Content="Configuración" Width="150" Height="40"/>
-            <Button Content="Abandonar" Width="150" Height="40"
+            
+            <Button Content="Abandonar"
+                    Width="150" 
+                    Height="40"
                     Command="{Binding BackCommand}"/>
+
+            <TextBlock Text="{Binding StatusMessage}" 
+                       FontSize="30"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       Margin="0,100,0,0"/>
+
         </StackPanel>
 
         <StackPanel Grid.Column="1" >
-            <TextBlock Text="{Binding ElapsedTime}" FontSize="40" HorizontalAlignment="Center"/>
-            <ItemsControl ItemsSource="{Binding Cells}" Height="400" Width="400" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding ElapsedTime}" 
+                       FontSize="40" 
+                       HorizontalAlignment="Center"/>
             
-            <ItemsControl.ItemsPanel>
+            <ItemsControl ItemsSource="{Binding Cells}"
+                          Height="410" 
+                          Width="410" 
+                          HorizontalAlignment="Center">
+            
+                <ItemsControl.ItemsPanel>
+                
                     <ItemsPanelTemplate>
-                         <UniformGrid Columns="15"/>
+                         <UniformGrid Columns="{Binding Column}"/>
                     </ItemsPanelTemplate>
+                
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
@@ -38,11 +62,15 @@
                         <Button Style="{StaticResource CellButton}"
                                 Command="{Binding DataContext.RevealCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
+                            
                             <Button.InputBindings>
+                                
                                 <MouseBinding MouseAction="RightClick"
                                               Command="{Binding DataContext.FlagCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                               CommandParameter="{Binding}" />
+                                
                             </Button.InputBindings>
+                            
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

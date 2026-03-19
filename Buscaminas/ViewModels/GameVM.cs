@@ -18,7 +18,6 @@ namespace Buscaminas.ViewModels
     {
         private readonly GameModel _game;
         private readonly Action<object> _navigate;
-        private readonly string _currentdifficulty;
         private bool _lost;
         private bool _won;
 
@@ -28,12 +27,15 @@ namespace Buscaminas.ViewModels
 
         public string ElapsedTime => _elapsed.ToString(@"mm\:ss");
 
+        // ── Constructor ───
         public GameVM(string difficulty, Action<object> navigate)
         {
             _navigate = navigate;
-            _currentdifficulty = difficulty;
             _game = new GameModel();
-            _game.StartGame(_currentdifficulty);
+            _game.StartGame(difficulty);
+            _lost = false;
+            _won = false;
+            StatusMessage = string.Empty;
             Cells = new ObservableCollection<CellVM>();
             BuildCellViewModels();
             StartTimer();
@@ -41,40 +43,44 @@ namespace Buscaminas.ViewModels
             RevealCommand = new RelayCommand(obj => RevealCell(obj as CellVM));
             FlagCommand = new RelayCommand(obj => ToggleFlag(obj as CellVM));
             BackCommand = new RelayCommand(_ => { StopTimer(); _navigate(new MainMenuVM(_navigate)); });
-            SettingsCommand = new RelayCommand(_ => { StopTimer(); _navigate(new SettingsVM(_navigate)); });
             RestartCommand = new RelayCommand(_ =>
             {
                 StopTimer();
                 _game.StartGame(difficulty);
-                BuildCellViewModels();
                 _lost = false;
                 _won = false;
                 StatusMessage = string.Empty;
+                BuildCellViewModels();
                 StartTimer();
             });
 
         }
 
+        //── Propiedades ───
         public ObservableCollection<CellVM> Cells { get; }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            private set 
+            { 
+                _statusMessage = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public int Rows => _game.Rows;
         public int Columns => _game.Columns;
 
         public bool GameOver => _won || _lost;
 
-        private string _statusMessage = string.Empty;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            private set { _statusMessage = value; OnPropertyChanged(); }
-        }
 
         // ── Comandos ───
         public ICommand RevealCommand { get; }
         public ICommand FlagCommand { get; }
         public ICommand RestartCommand { get; }
         public ICommand BackCommand { get; }
-        public ICommand SettingsCommand { get; }
 
         // ── Métodos privados ───
         private void BuildCellViewModels()
@@ -95,8 +101,8 @@ namespace Buscaminas.ViewModels
             {
                 cellVM.IsRevealed = true;
                 _lost = true;
-                StatusMessage = "¡Boom! Pisaste una mina. 💣";
                 StopTimer();
+                StatusMessage = "¡Oh, no! ¡Has perdido! 💣";
                 RevealAllMines();
                 return;
             }
@@ -124,7 +130,7 @@ namespace Buscaminas.ViewModels
             foreach (var cellVM in Cells)
             {
                 if (_game.Cells[cellVM.Row, cellVM.Column].IsRevealed)
-                    cellVM.ForceSync();
+                    cellVM.SyncCells();
             }
         }
 
@@ -134,8 +140,6 @@ namespace Buscaminas.ViewModels
                 if (cellVM.IsMine)
                     cellVM.IsRevealed = true;
         }
-
-
 
         private void StartTimer()
         {

@@ -34,10 +34,6 @@
                     Command="{Binding GameCommand}"
                     Margin="0,0,0,14"/>
 
-            <Button Content="⚙  Opciones"
-                    Command="{Binding SettingsCommand}"
-                    Margin="0,0,0,14"/>
-
             <Button Content="✕  Salir"
                     Command="{Binding ExitCommand}"/>
 
@@ -46,6 +42,7 @@
         <Button Grid.Row="2"
                 Style="{StaticResource HowToPlayButton}"
                 Content="?"
+                Command="{Binding HowToPlayCommand}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Margin="0,0,20,20"/>

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Buscaminas.ViewModels
+namespace Buscaminas.Utilities
 {
     internal abstract class BaseViewModel : INotifyPropertyChanged
     {

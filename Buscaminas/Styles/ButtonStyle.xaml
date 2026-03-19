@@ -64,7 +64,7 @@
              <Setter Property="VerticalAlignment" Value="Top"/>
              <Setter Property="Width" Value="40"/>
              <Setter Property="Height" Value="40"/>
-             <Setter Property="FontSize" Value="25"/>
+             <Setter Property="FontSize" Value="20"/>
              <Setter Property="FontWeight" Value="Bold"/>
              <Setter Property="Background" Value="White"/>
              <Setter Property="Foreground" Value="MediumPurple"/>
@@ -94,7 +94,7 @@
         <Setter Property="Content"         Value="{Binding DisplayText}"/>
         <Setter Property="Background"      Value="White"/>
         <Setter Property="Foreground"      Value="MediumPurple"/>
-        <Setter Property="FontSize"        Value="12"/>
+        <Setter Property="FontSize"        Value="13"/>
         <Setter Property="FontWeight"      Value="Bold"/>
         <Setter Property="BorderBrush"     Value="LightSlateGray"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -108,8 +108,11 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="2">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
+                        
+                        <Viewbox Margin="1" Stretch="Uniform">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Viewbox>
+                        
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -126,22 +129,25 @@
 
         <Style.Triggers>
 
+            <!-- Celda segura -->
+            <DataTrigger Binding="{Binding IsSafeCell}" Value="True">
+                <Setter Property="Background" Value="LightGreen"/>
+            </DataTrigger>
 
             <!-- Celda revelada sin mina -->
             <DataTrigger Binding="{Binding IsRevealed}" Value="True">
                 <Setter Property="Background" Value="LightGray"/>
-                <Setter Property="Cursor"     Value="Arrow"/>
             </DataTrigger>
 
-            <!-- Celda con bandera -->
-            <DataTrigger Binding="{Binding IsFlagged}" Value="True">
-                <Setter Property="Background" Value="SlateGray"/>
+            <!-- Celda marcada con bandera -->
+            <DataTrigger Binding="{Binding IsFlagged}" Value="true">
+                <Setter Property="BorderBrush" Value="PaleVioletRed"/>
             </DataTrigger>
 
             <!-- Celda revelada que es mina -->
             <DataTrigger Binding="{Binding ShowMine}" Value="True">
+                <Setter Property="FontSize" Value="11"/>
                 <Setter Property="Background" Value="PaleVioletRed"/>
-                <Setter Property="Foreground" Value="White"/>
             </DataTrigger>
 
         </Style.Triggers>

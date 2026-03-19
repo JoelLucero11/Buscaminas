@@ -10,17 +10,11 @@ namespace Buscaminas.Models
     // Modelo para representar cada celda del tablero
     class CellModel
     {
-        public bool IsMine { get; set; }
-        public bool IsRevealed { get; set; }
-        public bool IsFlagged { get; set; }
-        public int AdjacentMines { get; set; }
-        public CellModel()
-        {
-            IsMine = false;
-            IsRevealed = false;
-            IsFlagged = false;
-            AdjacentMines = 0;
-        }
+        public bool IsMine { get; set; } = false;
+        public bool IsRevealed { get; set; } = false;
+        public bool IsFlagged { get; set; } = false;
+        public int AdjacentMines { get; set; } = 0;
+        public bool IsSafe { get; set; } = false;
 
     }
 }
