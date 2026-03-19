@@ -24,11 +24,10 @@ MainWindow.xaml
 
 # Tecnologías utilizadas
 - C#  
-- WPF / XAML  
-- MVVM  
+- WPF / XAML   
 - Visual Studio 2022
 
-# ▶️ Cómo ejecutar
+# Cómo ejecutar
 1. Clonar este repositorio:
    ```bash
    git clone https://github.com/JoelLucero11/Buscaminas.git
