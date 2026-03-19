@@ -17,15 +17,15 @@
         <StackPanel HorizontalAlignment="Center" Grid.Column="0">
             
             <TextBlock Text="Buscaminas" 
-                       HorizontalAlignment="Center"/>
-            
+                       HorizontalAlignment="Center"
+                       FontSize="20"
+                       Margin="0,40,0,0"/>
+
             <Button Content="Reiniciar"
                     Width="150" 
                     Height="40"
                     Command="{Binding RestartCommand}"/>
-            
-            <Button Content="Configuración" Width="150" Height="40"/>
-            
+
             <Button Content="Abandonar"
                     Width="150" 
                     Height="40"
