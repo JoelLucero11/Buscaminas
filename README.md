@@ -7,7 +7,7 @@ Se buscó recrear el clásico juego de Buscaminas, con un enfoque en buenas prá
 -  Tutorial con imágenes 
 -  Interfaz gráfica con botones interactivos.  
 -  Lógica de juego implementada en C#.  
--  Separación clara entre *Model*, **ViewModel* y **View*.  
+-  Separación clara entre *Model*, *ViewModel* y *View*.  
 -  Uso de *commands* y *data binding*. 
 
 # Estructura del proyecto
