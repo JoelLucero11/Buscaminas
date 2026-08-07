@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Buscaminas.Views.DifficultySelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Buscaminas.Views"
+             xmlns:vm="clr-namespace:Buscaminas.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <StackPanel>
+
+        <Button Content="&lt;"
+                Style="{StaticResource HowToPlayButton}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="30,20,0,0"
+                Command="{Binding BackCommand}" 
+                FontSize="18"/>
+        
+        <Label Content="Selecciona la dificultad" 
+               FontSize="35" 
+               HorizontalAlignment="Center"
+               FontWeight="Bold" 
+               Margin="0,0,0,30"/>
+
+        <Button Content="Fácil" 
+            Command="{Binding EasyCommand}" 
+            FontSize="18"/>
+
+        <Button Content="Medio" 
+            Command="{Binding MediumCommand}" 
+            FontSize="18"/>
+
+        <Button Content="Difícil"
+                Command="{Binding HardCommand}" 
+                FontSize="18"/>
+
+        
+
+    </StackPanel>
+</UserControl>

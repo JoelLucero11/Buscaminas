@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Buscaminas\**" />
+    <Compile Remove="PuzzleGrid\**" />
+    <EmbeddedResource Remove="Buscaminas\**" />
+    <EmbeddedResource Remove="PuzzleGrid\**" />
+    <None Remove="Buscaminas\**" />
+    <None Remove="PuzzleGrid\**" />
+    <Page Remove="Buscaminas\**" />
+    <Page Remove="PuzzleGrid\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="Buscaminas\Buscaminas.csproj" />
+    <ProjectReference Include="PuzzleGrid\PuzzleGrid.csproj" />
+  </ItemGroup>
+
+</Project>
