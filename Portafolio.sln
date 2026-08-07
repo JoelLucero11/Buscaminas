@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMenu", "Juegos\MainMenu\MainMenu.csproj", "{70352DB3-805E-BD22-E5DE-1ECA76ABF2B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Juegos\Core\Core.csproj", "{F78DDA8F-45AD-245B-B2E2-F8D8B0BCC9C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buscaminas", "Juegos\MainMenu\Buscaminas\Buscaminas.csproj", "{63DE78DA-20C0-9467-5EA2-9A84C3184990}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleGrid", "Juegos\MainMenu\PuzzleGrid\PuzzleGrid.csproj", "{620431A7-A729-84BE-A45C-33F9E4F4BCD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70352DB3-805E-BD22-E5DE-1ECA76ABF2B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70352DB3-805E-BD22-E5DE-1ECA76ABF2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70352DB3-805E-BD22-E5DE-1ECA76ABF2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70352DB3-805E-BD22-E5DE-1ECA76ABF2B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78DDA8F-45AD-245B-B2E2-F8D8B0BCC9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78DDA8F-45AD-245B-B2E2-F8D8B0BCC9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78DDA8F-45AD-245B-B2E2-F8D8B0BCC9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78DDA8F-45AD-245B-B2E2-F8D8B0BCC9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DE78DA-20C0-9467-5EA2-9A84C3184990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DE78DA-20C0-9467-5EA2-9A84C3184990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DE78DA-20C0-9467-5EA2-9A84C3184990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DE78DA-20C0-9467-5EA2-9A84C3184990}.Release|Any CPU.Build.0 = Release|Any CPU
+		{620431A7-A729-84BE-A45C-33F9E4F4BCD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{620431A7-A729-84BE-A45C-33F9E4F4BCD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{620431A7-A729-84BE-A45C-33F9E4F4BCD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{620431A7-A729-84BE-A45C-33F9E4F4BCD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8ED968B9-62AF-43E9-BCA4-2AB5AD43934D}
+	EndGlobalSection
+EndGlobal
